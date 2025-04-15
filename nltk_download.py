@@ -1,6 +1,5 @@
 import nltk
 
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('brown')
-nltk.download('punkt_tab')
+nltk.download('punkt', download_dir='nltk_data')
+nltk.download('stopwords', download_dir='nltk_data')
+nltk.download('brown', download_dir='nltk_data')
