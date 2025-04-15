@@ -10,12 +10,13 @@ def calculate_perplexity(tokens, model):
     from nltk.util import ngrams
     padded_tokens = ['<s>'] + tokens + ['</s>']
     ngram_sequence = list(ngrams(padded_tokens, model.order))
+    if not ngram_sequence:
+        return -1
     try:
-        perplexity = model.perplexity(ngram_sequence)
+        return model.perplexity(ngram_sequence)
     except Exception as e:
-        logging.warning(f"Failed to calculate perplexity: {e}")
-        perplexity = float("inf")
-    return perplexity
+        print(f"[ERROR] Perplexity calculation failed: {e}")
+        return -1
 
 def calculate_burstiness(tokens):
     word_freq = FreqDist(tokens)

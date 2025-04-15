@@ -8,8 +8,10 @@ def get_model():
     global _model
     if _model is None:
         train_tokens = brown.words()
-        train_data, padded_vocab = padded_everygram_pipeline(1, train_tokens)
-        model = MLE(1)
+        n = 2  # atau 3
+        train_data, padded_vocab = padded_everygram_pipeline(n, train_tokens)
+        model = MLE(n)
         model.fit(train_data, padded_vocab)
         _model = model
     return _model
+
