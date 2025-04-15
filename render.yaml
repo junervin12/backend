@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: gpt-shield
+    runtime: python
+    buildCommand: "python nltk_download.py"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port 10000"
+    plan: free
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "true"
