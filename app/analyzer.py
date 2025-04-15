@@ -1,21 +1,22 @@
 from app.preprocessing import preprocess_text
 from app.model import get_model
 from nltk.probability import FreqDist
+from nltk.util import ngrams
 import math
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
 def calculate_perplexity(tokens, model):
-    from nltk.util import ngrams
     padded_tokens = ['<s>'] + tokens + ['</s>']
-    ngram_sequence = list(ngrams(padded_tokens, model.order))
+    n = model.order
+    ngram_sequence = list(ngrams(padded_tokens, n))
     if not ngram_sequence:
         return -1
     try:
         return model.perplexity(ngram_sequence)
     except Exception as e:
-        print(f"[ERROR] Perplexity calculation failed: {e}")
+        logging.error(f"[ERROR] Perplexity calculation failed: {e}")
         return -1
 
 def calculate_burstiness(tokens):
@@ -44,6 +45,7 @@ def analyze_text(text):
         logging.warning(f"Burstiness value invalid: {burstiness}")
         burstiness = -1
 
+    # Bisa disesuaikan tergantung hasil eksperimen kamu
     verdict = "Likely human-written text"
     if perplexity < 100 and burstiness < 1:
         verdict = "AI-generated-like text (based on statistical behavior)"
