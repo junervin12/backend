@@ -3,7 +3,7 @@ services:
     name: fastapi-app
     env: python
     plan: free
-    buildCommand: "python nltk_download.py && pip install -r requirements.txt"
+    buildCommand: "pip install -r requirements.txt && python nltk_download.py"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port 10000"
     envVars:
       - key: PYTHONUNBUFFERED
